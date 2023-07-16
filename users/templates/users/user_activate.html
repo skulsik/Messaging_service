@@ -1,0 +1,27 @@
+{% extends 'messaging/base.html' %}
+{% block content %}
+
+<br><br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <br>
+                <p>Верификация прошла успешно!</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="about-info">
+                <br>
+                <p>Ваша учетная запись успешно активирована!</p>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'messaging:home' %}" class="btn btn-success">На главную</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

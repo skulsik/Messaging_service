@@ -1,0 +1,28 @@
+{% extends 'messaging/base.html' %}
+{% block content %}
+
+<br><br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <br>
+                <p>Пожалуйста, пройдите аутентификацию.</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Войти</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'users:reset_password' %}" class="btn btn-danger">Забыли пароль?</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}
