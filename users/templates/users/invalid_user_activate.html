@@ -1,0 +1,27 @@
+{% extends 'messaging/base.html' %}
+{% block content %}
+
+<br><br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <br>
+                <p>Ошибка верификации.</p>
+            </div>
+        </div>
+        <div class="card-body">
+             <div class="about-info">
+                <br>
+                <p>Ваша ссылка не работает, попробуйте снова.</p>
+             </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'users:register' %}" class="btn btn-success">Регистрация</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}
