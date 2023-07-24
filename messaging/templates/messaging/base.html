@@ -1,4 +1,5 @@
 {% load static %}
+{% load FilterExtension %}
 
 <!doctype html>
 <html lang="ru">
@@ -79,15 +80,15 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'messaging:home' %}"><small class="small-title"><strong class="text-warning">01</strong></small> Home</a>
+                            <a class="nav-link" href="{% url 'messaging:home' %}"><small class="small-title"><strong class="text-warning">01</strong></small> Главная</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href=""><small class="small-title"><strong class="text-warning">02</strong></small> Блог</a>
+                            <a class="nav-link" href="{% url 'blog:blogs' %}"><small class="small-title"><strong class="text-warning">02</strong></small> Блог</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href=""><small class="small-title"><strong class="text-warning">03</strong></small> Projects</a>
+                            <a class="nav-link click-scroll" href=""><small class="small-title"><strong class="text-warning">03</strong></small> Рассылки</a>
                         </li>
 
                         <li class="nav-item">
@@ -118,6 +119,57 @@
 
         <main>
 
+            {% if user.is_authenticated %}
+
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <br>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <table class="table">
+                                            <tr>
+                                                <td colspan="5">
+                                                    <h5><strong class="text-warning">Панель управления пользователя.</strong></h5>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'messaging:clients' %}"> Клиенты </a>
+                                                </td>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'messaging:messages' %}">Сообщения</a>
+                                                </td>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'messaging:user_mailing' %}">Рассылка</a>
+                                                </td>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'blog:user_blogs' %}">Статьи</a>
+                                                </td>
+                                                {% if user.is_superuser %}
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'admin:index' %}">Админка</a>
+                                                </td>
+                                                {% endif %}
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if user.avatar %}
+                                            <img style="height: 100px; width: 100px; margin: 15px;" src="{{ user.avatar|mediapath }}" alt="Avatar" class="card-img">
+                                        {% else %}
+                                            <img style="height: 100px; width: 100px; margin: 15px;" src="http://127.0.0.1:8000/media/users/Not_ava.jpg" alt="Not Avatar" class="card-img">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+
             {% block content %}
             {% endblock %}
 
@@ -131,23 +183,23 @@
 
                             <div class="col-lg-6 col-12">
                                 <form class="custom-form contact-form" action="" method="post" role="form">
-                                    <small class="small-title">Contact <strong class="text-white">05/05</strong></small>
+                                    <small class="small-title">Контакты <strong class="text-white">04/06</strong></small>
 
-                                    <h2 class="mb-5">Say Hi to us</h2>
+                                    <h2 class="mb-5">Есть вопросы? Заполни форму обратной связи, мы обязательно ответим.</h2>
 
                                     <div class="row">
                                         <div class="col-lg-6 col-md-6 col-12">
-                                            <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required="">
+                                            <input type="text" name="name" id="name" class="form-control" placeholder="Ваше имя" required="">
                                         </div>
 
                                         <div class="col-lg-6 col-md-6 col-12">
-                                            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="your@company.com" required="">
+                                            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Почта" required="">
                                         </div>
 
                                         <div class="col-12">
-                                            <textarea class="form-control" rows="7" id="message" name="message" placeholder="Message"></textarea>
+                                            <textarea class="form-control" rows="7" id="message" name="message" placeholder="Ваше сообщение"></textarea>
 
-                                            <button type="submit" class="form-control">Submit</button>
+                                            <button type="submit" class="form-control">Отправить</button>
                                         </div>
 
                                     </div>
@@ -195,7 +247,7 @@
 
                     <div class="col-lg-6 col-12">
                         <div class="site-footer-wrap d-flex align-items-center">
-                            <p class="copyright-text mb-0 me-4">Copyright © 2036 Сервис рассылок для вашего бизнеса</p>
+                            <p class="copyright-text mb-0 me-4">Copyright © 2023 Сервис рассылок для вашего бизнеса</p>
 
                             <ul class="social-icon">
                                 <li><a href="https://facebook.com/tooplate" class="social-icon-link bi-facebook"></a></li>

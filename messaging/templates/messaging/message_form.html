@@ -1,0 +1,29 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <br>
+                <p>{% if object %}Измените данные сообщения{% else %}Добавьте новое сообщение.{% endif %}</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-outline-secondary">{% if object %}Сохранить{% else %}Добавить{% endif %}</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'messaging:messages' %}" class="btn btn-outline-secondary">Список сообщений</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

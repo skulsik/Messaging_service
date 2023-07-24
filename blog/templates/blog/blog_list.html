@@ -1,0 +1,66 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <table width=100% style="margin-bottom: 20px;">
+                    <tr>
+                        <td><h5 style="color: orange;">{{ title }}</h5></td>
+                        <td style="text-align: right;"><a href="{% url 'blog:create_blog' %}" class="btn btn-outline-secondary">Добавить новую статью</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <tr>
+                    <td><p>Slug</p></td>
+                    <td><p>Название</p></td>
+                    <td><p>Дата создания</p></td>
+                    <td><p>Количество просмотров</p></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            {% for object in object_list %}
+
+
+                <tr>
+                    <td>
+                        <a href="{% url 'blog:user_view_blog' object.slug %}">{{ object.slug }}</a>
+                    </td>
+                    <td>
+                        {{ object.name }}
+                    </td>
+                    <td>
+                        {{ object.date_of_creation }}
+                    </td>
+                    <td>
+                        {{ object.number_of_views }}
+                    </td>
+                    <td>
+                        <a href="{% url 'blog:update_blog' object.slug %}" class="btn btn-outline-secondary">Изменить</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'blog:delete_blog' object.slug %}" class="btn btn-outline-danger">Удалить</a>
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+
+            </table>
+
+        </div>
+        <div class="card-footer">
+            <center><a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a></center>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

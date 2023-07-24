@@ -1,0 +1,87 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<script>
+function check()
+{
+ var check=document.getElementsByTagName('input');
+ for(var i=0;i<check.length;i++)
+ {
+  if(check[i].type=='checkbox')
+  {
+   check[i].checked=true;
+  }
+ }
+}
+
+function uncheck()
+{
+ var uncheck=document.getElementsByTagName('input');
+ for(var i=0;i<uncheck.length;i++)
+ {
+  if(uncheck[i].type=='checkbox')
+  {
+   uncheck[i].checked=false;
+  }
+ }
+}
+</script>
+
+<br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <br>
+                <h5 style="color: orange;">{% if object %}Измените данные рассылки.{% else %}Добавьте новую рассылку.{% endif %}</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <p>Выберите клиентов, для отправки сообщения:</p>
+                <table class="table">
+                    <tr>
+                        <td>
+                            <p>Почта</p>
+                        </td>
+                        <td>
+                            <p>Комментарий</p>
+                        </td>
+                        <td>
+                            <input type="button" value="Все" onclick="check();" class="btn btn-outline-secondary">
+                            <input type="button" value="Сброс" onclick="uncheck();" class="btn btn-outline-secondary">
+                        </td>
+                    </tr>
+
+                {% for client in client_list %}
+                    <tr>
+                       <td>
+                           <a href="{% url 'messaging:view_client' client.id %}">{{ client }}</a>
+                       </td>
+                       <td>
+                           <p>{{ client.comments }}</p>
+                       </td>
+                       <td>
+                           <input type="checkbox" name="{{ client.email }}" {% if client in mailing_list %}checked{% endif %}>
+                       </td>
+                    </tr>
+
+                {% endfor %}
+
+                </table>
+                <br>
+                <button type="submit" class="btn btn-outline-secondary">{% if object %}Сохранить{% else %}Добавить{% endif %}</button>
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'messaging:user_mailing' %}" class="btn btn-outline-secondary">Список рассылок</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}
