@@ -1,0 +1,58 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <h5 style="color: orange;">Сообщение: {{ title }}</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <td>
+                        Тема сообщения:
+                    </td>
+                    <td>
+                        {{ object.topic }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Текст сообщения:
+                    </td>
+                    <td>
+                        {{ object.text }}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    <td>
+                        <a href="{% url 'messaging:update_message' object.id %}" class="btn btn-outline-secondary">Изменить</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:delete_message' object.id %}" class="btn btn-outline-danger">Удалить</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <table class="table">
+                <tr class="text-center">
+                    <td>
+                        <a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:messages' %}" class="btn btn-outline-secondary">К списку сообщений</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

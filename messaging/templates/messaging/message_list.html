@@ -1,0 +1,58 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <table width=100% style="margin-bottom: 20px;">
+                    <tr>
+                        <td><h3 style="color: orange;">{{ title }}</h3></td>
+                        <td style="text-align: right;"><a href="{% url 'messaging:create_message' %}" class="btn btn-outline-secondary">Добавить, новоe сообщение</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <tr>
+                    <td><p>Тема</p></td>
+                    <td><p>Название</p></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            {% for object in object_list %}
+
+
+                <tr>
+                    <td>
+                        <a href="{% url 'messaging:view_message' object.id %}">{{ object.topic }}</a>
+                    </td>
+                    <td>
+                        {{ object.text }}
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:update_message' object.id %}" class="btn btn-outline-secondary">Изменить</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:delete_message' object.id %}" class="btn btn-outline-danger">Удалить</a>
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+
+            </table>
+
+        </div>
+        <div class="card-footer">
+            <center><a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a></center>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

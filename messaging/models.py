@@ -1,3 +1,5 @@
+from urllib import request
+
 from django.db import models
 
 NULLABLE = {'blank': True, 'null': True}
@@ -21,6 +23,20 @@ class Client(models.Model):
         verbose_name_plural = 'Клиенты'
 
 
+class Message(models.Model):
+    """ Модель сообщения """
+    topic = models.CharField(max_length=100, verbose_name='Тема письма')
+    text = models.TextField(max_length=255, verbose_name='Текст письма')
+    user_owner = models.ForeignKey('users.user', on_delete=models.PROTECT, verbose_name='Владелец сообщения')
+
+    def __str__(self):
+        return f'{self.topic}'
+
+    class Meta:
+        verbose_name = 'Сообщение'
+        verbose_name_plural = 'Сообщения'
+
+
 class Mailing(models.Model):
     """ Модель рассылки (данные о рассылке, подтягивает клиента и сообщение) """
     name = models.CharField(max_length=50, verbose_name='Название рассылки')
@@ -38,9 +54,10 @@ class Mailing(models.Model):
         ('completed', 'завершена'),
     ]
     status = models.CharField(max_length=9, choices=status_list, default='created', verbose_name='Статус рассылки')
-    #clients = models.CharField(max_length=60, verbose_name='', **NULLABLE)
-    #message = models.CharField(max_length=255, verbose_name='Сообщение', **NULLABLE)
-    user_owner = models.ForeignKey('users.user', on_delete=models.PROTECT, default='users.user', verbose_name='Владелец рассылки')
+    clients = models.ManyToManyField(Client, verbose_name='Клиенты')
+    message = models.ForeignKey(Message, on_delete=models.PROTECT, verbose_name='Сообщение')
+    user_owner = models.ForeignKey('users.user', on_delete=models.PROTECT, verbose_name='Владелец рассылки')
+    is_active = models.BooleanField(default=True, verbose_name='Признак запуска рассылки')
 
     def __str__(self):
         return f'{self.name}'
@@ -48,20 +65,6 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'Рассылка'
         verbose_name_plural = 'Рассылки'
-
-
-class Message(models.Model):
-    """ Модель сообщения """
-    topic = models.CharField(max_length=255, verbose_name='Тема письма')
-    text = models.CharField(max_length=255, verbose_name='Текст письма')
-    user_owner = models.ForeignKey('users.user', on_delete=models.PROTECT, default='users.user', verbose_name='Владелец сообщения')
-
-    def __str__(self):
-        return f'{self.topic}'
-
-    class Meta:
-        verbose_name = 'Сообщение'
-        verbose_name_plural = 'Сообщения'
 
 
 class Log(models.Model):

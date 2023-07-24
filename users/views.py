@@ -104,6 +104,13 @@ class UserPasswordResetDoneView(PasswordResetDoneView):
     PasswordResetDoneView.template_name = 'users/password_reset_done.html'
 
 
+class ProfileView(TemplateView):
+    template_name = 'users/profile.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
 class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     """ Редактирование профиля """
     model = User

@@ -1,0 +1,100 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <table width=100% style="margin-bottom: 20px;">
+                    <tr>
+                        <td><h3 style="color: orange;">{{ title }}</h3></td>
+                        <td style="text-align: right;"><a href="{% url 'messaging:create_mailing' %}" class="btn btn-outline-secondary">Добавить, новую рассылку</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <tr>
+                    <td>
+                        <p>Название</p>
+                    </td>
+                    <td>
+                        <p>Начало</p>
+                    </td>
+                    <td>
+                        <p>Завершение</p>
+                    </td>
+                    <td>
+                        <p>Периодичность</p>
+                    </td>
+                    <td>
+                        <p>Статус</p>
+                    </td>
+                    <td>
+                        <p>Признак запуска</p>
+                    </td>
+                    <td>
+                        <p>Сообщение</p>
+                    </td>
+                    <td>
+                        <p>Список клиентов</p>
+                    </td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+            {% for object in object_list %}
+
+
+                <tr>
+                    <td>
+                        <a href="{% url 'messaging:user_view_mailing' object.id %}">{{ object.name }}</a>
+                    </td>
+                    <td>
+                        {{ object.dtime_begin }}
+                    </td>
+                    <td>
+                        {{ object.dtime_end }}
+                    </td>
+                    <td>
+                        {{ object.frequency }}
+                    </td>
+                    <td>
+                        {{ object.status }}
+                    </td>
+                    <td>
+                        {{ object.is_active }}
+                    </td>
+                    <td>
+                        {{ object.message }}
+                    </td>
+                    <td>
+                        {% for client in object.clients.all %}
+                        <a href="{% url 'messaging:view_client' client.id %}">{{ client }}</a><br/>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:update_mailing' object.id %}" class="btn btn-outline-secondary">Изменить</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:delete_mailing' object.id %}" class="btn btn-outline-danger">Удалить</a>
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+
+            </table>
+
+        </div>
+        <div class="card-footer">
+            <center><a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a></center>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
