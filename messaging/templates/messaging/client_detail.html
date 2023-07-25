@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% if object.user_owner == user %}
+
 <br>
 <center>
 <div class="col-6">
@@ -78,5 +80,11 @@
     </div>
 </div>
 </center>
+
+{% else %}
+
+{% include 'messaging/access_is_closed.html' %}
+
+{% endif %}
 
 {% endblock %}

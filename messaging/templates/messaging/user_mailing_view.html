@@ -2,6 +2,8 @@
 
 {% block content %}
 
+{% if object.user_owner == user %}
+
 <br>
 <center>
 <div class="col-6">
@@ -55,6 +57,14 @@
                 </tr>
                 <tr>
                     <td>
+                        Сообщение:
+                    </td>
+                    <td>
+                        <a href="{% url 'messaging:view_message' object.message.id %}">{{ object.message }}</a><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
                         Список клиентов, которые получат сообщение:
                     </td>
                     <td>
@@ -88,5 +98,11 @@
     </div>
 </div>
 </center>
+
+{% else %}
+
+{% include 'messaging/access_is_closed.html' %}
+
+{% endif %}
 
 {% endblock %}

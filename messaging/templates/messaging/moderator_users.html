@@ -1,0 +1,113 @@
+{% extends 'messaging/base.html' %}
+{% load FilterExtension %}
+
+{% block content %}
+
+<br>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <table width=100% style="margin-bottom: 20px;">
+                    <tr>
+                        <td><h3 style="color: orange;">{{ title }}</h3></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'messaging:moderator_users' %}">
+                {% csrf_token %}
+
+            {% for object in object_list %}
+                {% if object.is_superuser %}
+                {% else %}
+
+                <br>
+                <center>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="about-info">
+                                <h5 style="color: orange;">Пользователь: {{ object.email }}</h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table>
+                                <tr>
+                                    <td>
+                                        {% if object.avatar %}
+                                            <img style="height: 300px; width: 300px; margin: 15px;" src="{{ object.avatar|mediapath }}" alt="Avatar" class="card-img">
+                                        {% else %}
+                                            <img style="height: 300px; width: 300px; margin: 15px;" src="http://127.0.0.1:8000/media/users/Not_ava.jpg" alt="Not Avatar" class="card-img">
+                                        {% endif %}
+                                    </td>
+                                    <td>
+
+                                        <table class="table">
+                                            <tr>
+                                                <td width="60%">
+                                                    <p>Имя:</p>
+                                                </td>
+                                                <td>
+                                                    {{ object.first_name }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Фамилия:</p>
+                                                </td>
+                                                <td>
+                                                    {{ object.last_name }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Телефон:</p>
+                                                </td>
+                                                <td>
+                                                    {{ object.phone }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Страна:</p>
+                                                </td>
+                                                <td>
+                                                    {{ object.country }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p>Заблокировать/разблокировать пользователя:</p>
+                                                </td>
+                                                <td style="text-align: right">
+                                                        <input type="checkbox" name="{{ object.id }}" {% if object.is_active %}checked{% endif %}>&nbsp&nbsp&nbsp
+                                                        <button type="submit" class="btn btn-outline-secondary">Сохранить</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                </center>
+
+                {% endif %}
+            {% endfor %}
+
+            </table>
+            </form>
+        </div>
+        <div class="card-footer">
+            <center><a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a></center>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
