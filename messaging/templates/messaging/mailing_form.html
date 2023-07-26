@@ -74,7 +74,13 @@ function uncheck()
 
                 </table>
                 <br>
-                <button type="submit" class="btn btn-outline-secondary">{% if object %}Сохранить{% else %}Добавить{% endif %}</button>
+                {% if object %}
+                    {% if object.user_owner == user %}
+                        <button type="submit" class="btn btn-outline-secondary">Сохранить</button>
+                    {% endif %}
+                {% else %}
+                    <button type="submit" class="btn btn-outline-secondary">Добавить</button>
+                {% endif %}
             </form>
         </div>
         <div class="card-footer">

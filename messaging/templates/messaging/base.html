@@ -88,7 +88,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link click-scroll" href=""><small class="small-title"><strong class="text-warning">03</strong></small> Рассылки</a>
+                            <a class="nav-link click-scroll" href="#section_4"><small class="small-title"><strong class="text-warning">03</strong></small> Статистика</a>
                         </li>
 
                         <li class="nav-item">
@@ -98,9 +98,6 @@
                         {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'users:logout' %}"><small class="small-title"><strong class="text-warning">05</strong></small> Выйти</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'users:profile' %}"><small class="small-title"><strong class="text-warning">06</strong></small> Профиль</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
@@ -130,7 +127,7 @@
                                     <td>
                                         <table class="table">
                                             <tr>
-                                                <td colspan="5">
+                                                <td colspan="8">
                                                     <h5><strong class="text-warning">Панель управления пользователя.</strong></h5>
                                                 </td>
                                             </tr>
@@ -147,11 +144,26 @@
                                                 <td>
                                                     <a class="bi-arrow-counterclockwise" href="{% url 'blog:user_blogs' %}">Статьи</a>
                                                 </td>
-                                                {% if user.is_superuser %}
                                                 <td>
-                                                    <a class="bi-arrow-counterclockwise" href="{% url 'admin:index' %}">Админка</a>
+                                                    {% if user.is_superuser %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'admin:index' %}">Админка</a>
+                                                    {% endif %}
                                                 </td>
-                                                {% endif %}
+                                                <td>
+                                                    {% if perms.messaging.view_mailing %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_mailing' %}"> Список рассылок </a>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if perms.users.view_user %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_users' %}"> Список пользователей </a>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if perms.users.view_log %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_log' %}"> Список log </a>
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                         </table>
                                     </td>
@@ -161,6 +173,8 @@
                                         {% else %}
                                             <img style="height: 100px; width: 100px; margin: 15px;" src="http://127.0.0.1:8000/media/users/Not_ava.jpg" alt="Not Avatar" class="card-img">
                                         {% endif %}
+                                        <br>
+                                        <a class="" href="{% url 'users:profile' %}"><small>ПРОФИЛЬ</small></a>
                                     </td>
                                 </tr>
                             </table>

@@ -55,12 +55,14 @@
                     </td>
                 </tr>
                 <tr class="text-center">
+                    {% if object.user_owner == user %}
                     <td>
                         <a href="{% url 'blog:update_blog' object.slug %}" class="btn btn-outline-secondary">Изменить</a>
                     </td>
                     <td>
                         <a href="{% url 'blog:delete_blog' object.slug %}" class="btn btn-outline-danger">Удалить</a>
                     </td>
+                    {% endif %}
                 </tr>
             </table>
         </div>

@@ -71,6 +71,7 @@ class Log(models.Model):
     """ Модель история рассылок """
     dtime_mailing = models.DateTimeField(verbose_name='Дата и время попытки')
     status_mailing = models.CharField(max_length=9, default='запущена', verbose_name='Статус рассылки')
+    name = models.CharField(max_length=255, verbose_name='Название рассылки', **NULLABLE)
     server_response = models.CharField(max_length=255, verbose_name='Ответ сервера')
 
     def __str__(self):
