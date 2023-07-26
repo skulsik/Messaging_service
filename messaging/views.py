@@ -7,9 +7,9 @@ from django.views.generic import CreateView, ListView, DetailView, DeleteView, U
 
 from blog.models import Blog
 from messaging.forms import ClientCreateViewForm, MessageCreateViewForm, MailingCreateViewForm
-from messaging.models import Client, Message, Mailing
-from messaging.tasks import mailing_check
+from messaging.models import Client, Message, Mailing, Log
 from services.cache import get_moderator_mailing_subjects, get_moderator_users_subjects
+from services.celery_beat import AddTask
 from users.models import User
 
 
@@ -109,7 +109,6 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
 class MessageCreateView(LoginRequiredMixin, CreateView):
     """ Добавление нового сообщения в БД """
     model = Message
-    #permission_required = "catalog.add_product"
     form_class = MessageCreateViewForm
 
     def get_success_url(self):
@@ -183,7 +182,6 @@ class AllUserMailingView(LoginRequiredMixin, ListView):
 class MailingCreateView(LoginRequiredMixin, CreateView):
     """ Добавление новой рассылки в БД """
     model = Mailing
-    #permission_required = "catalog.add_product"
     form_class = MailingCreateViewForm
 
     def get_success_url(self):
@@ -220,6 +218,13 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
             if client.email in post_dict:
                 self.object.clients.add(client)
 
+        # Добавляет задачу в БД
+        # Переодичность рассылки
+        every = self.object.frequency
+        # Имя для задачи(передает id для дальнейшего поиска рассылки)
+        name_id = self.object.id
+        AddTask(every=every, name=name_id)
+
         return super(MailingCreateView, self).form_valid(form)
 
 
@@ -231,7 +236,6 @@ class UserMailingView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = self.get_object()
-        mailing_check(self.object.pk)
         return context_data
 
 
@@ -285,6 +289,13 @@ class UserMailingUpdateView(LoginRequiredMixin, UpdateView):
                 # Если обЬект в списке не выбранных клиентов, удаляет связь
                 if client in mailing_list:
                     self.object.clients.remove(client)
+
+        # Добавляет задачу в БД
+        # Переодичность рассылки
+        every = self.object.frequency
+        # Имя для задачи(передает id для дальнейшего поиска рассылки)
+        name_id = self.object.id
+        AddTask(every=every, name=name_id)
 
         return super(UserMailingUpdateView, self).form_valid(form)
 
@@ -363,3 +374,17 @@ class ModeratorAllUsersView(PermissionRequiredMixin, ListView):
         queryset = super().get_queryset()
         queryset = queryset.all().order_by('email')
         return queryset
+
+
+class AllUserLogView(LoginRequiredMixin, ListView):
+    """ Список log """
+    model = Log
+    template_name = 'messaging/user_log.html'
+    extra_context = {
+        'title': 'Список задач'
+    }
+
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(user_owner=self.request.user)
+    #     return queryset

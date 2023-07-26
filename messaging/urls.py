@@ -29,4 +29,6 @@ urlpatterns = [
 
     path('moderator/mailing/', ModeratorAllMailingView.as_view(), name='moderator_mailing'),
     path('moderator/users/', ModeratorAllUsersView.as_view(), name='moderator_users'),
+
+    path('log/', AllUserLogView.as_view(), name='moderator_log'),
 ]

@@ -127,7 +127,7 @@
                                     <td>
                                         <table class="table">
                                             <tr>
-                                                <td colspan="7">
+                                                <td colspan="8">
                                                     <h5><strong class="text-warning">Панель управления пользователя.</strong></h5>
                                                 </td>
                                             </tr>
@@ -157,6 +157,11 @@
                                                 <td>
                                                     {% if perms.users.view_user %}
                                                         <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_users' %}"> Список пользователей </a>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if perms.users.view_log %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_log' %}"> Список log </a>
                                                     {% endif %}
                                                 </td>
                                             </tr>
