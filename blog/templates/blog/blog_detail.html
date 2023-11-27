@@ -1,0 +1,61 @@
+{% extends 'messaging/base.html' %}
+{% load FilterExtension %}
+
+{% block content %}
+
+<br>
+<center>
+<div class="col-10">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <table width=100% style="margin-bottom: 20px;">
+                    <tr>
+                        <td><h5 style="color: #0f5132;">{{ object.name }}</h5></td>
+                    </tr>
+                    <tr>
+                        <td><a href="{% url 'blog:view_blog' object.slug %}">{{ object.slug }}</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+
+            <table class="table">
+                <tr>
+                    <td>
+                        <p>{{ object.content }}</p>
+                        <p style="color: #aaaaaa;">Дата создания: {{ object.date_of_creation }}</p>
+                        <small style="color: orange;">Количество просмотров: {{ object.number_of_views }}</small>
+                        <p style="color: #999999;">
+                        {% if object.user_owner.first_name %}
+                        Имя автора: {{ object.user_owner.first_name }}
+                        {% else %}
+                        Имя автора: неизвестно
+                        {% endif %}
+                        </p>
+                    </td>
+                    <td>
+                        <img src="{{ object.image|mediapath }}" style="width: 400px; margin: 15px;" class="card-img" alt="">
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="card-footer">
+            <table class="table">
+                <tr class="text-center">
+                    <td>
+                        <a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'blog:blogs' %}" class="btn btn-outline-secondary">К списку статей</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

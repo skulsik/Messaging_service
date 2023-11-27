@@ -1,0 +1,210 @@
+{% extends 'messaging/base.html' %}
+{% load FilterExtension %}
+
+{% block content %}
+
+            <section class="about section-padding">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-12 mb-5 mb-lg-0">
+                            <div class="about-image-wrap h-100">
+                                <img src="media/peter-jones-WZROBIlY8Rg-unsplash.jpg" class="img-fluid about-image" alt="">
+
+                                <div class="about-image-info">
+                                    <h4 class="text-white">Ващенко Алексей, CEO</h4>
+
+                                    <p class="text-white mb-0">Вы можете свободно использовать сервис рассылки для достижения своих целей. Спасибо, что посетили наш портал.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6 col-12 d-flex flex-column">
+                            <div class="about-thumb bg-white shadow-lg">
+
+                                <div class="about-info">
+                                    <small class="small-title">О нас </small>
+
+                                    <h2 class="mb-3">Мощный сервис рассылки</h2>
+                                    <h5 class="mb-3">Помощь бизнесу на любых уровнях с 2001</h5>
+                                    <p>Сервис рассылки это мощный и надежный инструмент для вашего бизнеса. Вы можете использовать этот инструмент для любых целей. Вы имеете права распространять информацию о нас на любом другом веб-сайте.</p>
+                                    <p>Вы можете поддержать сервис рассылки небольшим пожертвованием PayPal, посетив нашу страницу <a href="https://github.com/skulsik">контактов</a>. Спасибо.</p>
+                                </div>
+                            </div>
+
+                            <div class="row h-100">
+                                <div class="col-lg-6 col-6">
+                                    <div class="about-thumb d-flex flex-column justify-content-center bg-danger mb-lg-0 h-100">
+
+                                        <div class="about-info">
+                                            <h5 class="text-white mb-4">Растем в бизнесе вместе.</h5>
+
+                                            <a class="custom-btn btn custom-bg-primary" href="{% url 'users:register' %}">Присоединиться</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6 col-6">
+                                    <div class="about-thumb d-flex flex-column justify-content-center bg-warning mb-lg-0 h-100">
+
+                                        <div class="about-info">
+                                            <h5 class="text-white mb-4">Как ты узнал о нас?</h5>
+
+                                            <p class="text-white mb-0">На самом деле, о нас знают все.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="services section-padding">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 text-center mx-auto mb-5">
+                            <small class="small-title">Статьи <strong class="text-warning">03/05</strong></small>
+
+                            <h2>Лучшие статьи блога.</h2>
+
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <nav>
+                                <div class="nav nav-tabs flex-column align-items-baseline" id="nav-tab" role="tablist">
+                                    <button class="nav-link active" id="nav-business-tab" data-bs-toggle="tab" data-bs-target="#nav-business" type="button" role="tab" aria-controls="nav-business" aria-selected="true">
+                                        <h3>{{ blog1 }}</h3>
+                                    </button>
+
+                                    <button class="nav-link" id="nav-strategy-tab" data-bs-toggle="tab" data-bs-target="#nav-strategy" type="button" role="tab" aria-controls="nav-strategy" aria-selected="false">
+                                        <h3>{{ blog2 }}</h3>
+                                    </button>
+
+                                    <button class="nav-link" id="nav-video-tab" data-bs-toggle="tab" data-bs-target="#nav-video" type="button" role="tab" aria-controls="nav-video" aria-selected="false">
+                                        <h3>{{ blog3 }}</h3>
+                                    </button>
+                                </div>
+                            </nav>
+                        </div>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-business" role="tabpanel" aria-labelledby="nav-intro-tab">
+                                    slug: <a href="{% url 'blog:view_blog' blog1.slug %}">{{ blog1.slug }}</a><br><br>
+                                    <img src="{{ blog1.image|mediapath }}" class="img-fluid" alt="">
+                                    <br><br>
+                                    <p>{{ blog1.content }}</p>
+                                    <p class="small" style="color: orange;">Дата публикации {{ blog1.date_of_creation }}
+                                    <br>Количество просмотров: {{ blog1.number_of_views }}</p>
+                                </div>
+
+                                <div class="tab-pane fade show" id="nav-strategy" role="tabpanel" aria-labelledby="nav-strategy-tab">
+                                    slug: <a href="{% url 'blog:view_blog' blog2.slug %}">{{ blog2.slug }}</a><br><br>
+                                    <img src="{{ blog2.image|mediapath }}" class="img-fluid" alt="">
+                                    <br><br>
+                                    <p>{{ blog2.content }}</p>
+                                    <p class="small" style="color: orange;">Дата публикации {{ blog2.date_of_creation }}
+                                    <br>Количество просмотров: {{ blog2.number_of_views }}</p>
+                                </div>
+
+                                <div class="tab-pane fade show" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
+                                    slug: <a href="{% url 'blog:view_blog' blog3.slug %}">{{ blog3.slug }}</a><br><br>
+                                    <img src="{{ blog3.image|mediapath }}" class="img-fluid" alt="">
+                                    <br><br>
+                                    <p>{{ blog3.content }}</p>
+                                    <p class="small" style="color: orange;">Дата публикации {{ blog3.date_of_creation }}
+                                    <br>Количество просмотров: {{ blog3.number_of_views }}</p>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section class="projects section-padding pb-0" id="section_4">
+                <div class="container">
+                    <div class="row">
+
+                        <div class="col-lg-10 col-12 text-center mx-auto mb-5">
+                            <small class="small-title">Статистика <strong class="text-warning">03/05</strong></small>
+
+                            <h2>У нас лучшие результаты</h2>
+                        </div>
+
+                        <div class="col-lg-4 col-12">
+                            <div class="projects-thumb projects-thumb-small">
+                                <a href="">
+                                    <img src="media/projects/1.jpg" class="img-fluid projects-image" alt="">
+
+                                    <div class="projects-info">
+                                        <div class="projects-title-wrap">
+                                            <small class="projects-small-title">Количество рассылок</small>
+
+                                            <h2 class="projects-title">{{ mailing_count }}</h2>
+                                        </div>
+
+                                        <div class="projects-btn-wrap mt-4">
+                                            <span class="custom-btn btn">
+                                                <i class="bi-arrow-right"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12">
+                            <div class="projects-thumb projects-thumb-small">
+                                <a href="">
+                                    <img src="media/projects/2.jpg" class="img-fluid projects-image" alt="">
+
+                                    <div class="projects-info">
+                                        <div class="projects-title-wrap">
+                                            <small class="projects-small-title">Активных рассылок</small>
+
+                                            <h2 class="projects-title">{{ mailing_count_active }}</h2>
+                                        </div>
+
+                                        <div class="projects-btn-wrap mt-4">
+                                            <span class="custom-btn btn" href="project-detail.html">
+                                                <i class="bi-arrow-right"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-12">
+                            <div class="projects-thumb projects-thumb-small">
+                                <a href="">
+                                    <img src="media/projects/3.jpg" class="img-fluid projects-image" alt="">
+
+                                    <div class="projects-info">
+                                        <div class="projects-title-wrap">
+                                            <small class="projects-small-title">Уникальных клиентов</small>
+
+                                            <h2 class="projects-title">{{ users_count }}</h2>
+                                        </div>
+
+                                        <div class="projects-btn-wrap mt-4">
+                                            <span class="custom-btn btn" href="project-detail.html">
+                                                <i class="bi-arrow-right"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends 'messaging/base.html' %}
+{% load FilterExtension %}
+
+{% block content %}
+
+<br><br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <h5 style="color: orange;">Профиль пользователя {{ user.email }}</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <td class="text-center" colspan="2">
+                        {% if user.avatar %}
+                            <img style="width: 300px; margin: 15px;" src="{{ user.avatar|mediapath }}" alt="Avatar">
+                        {% else %}
+                            <img style="width: 300px; margin: 15px;" src="http://127.0.0.1:8000/media/users/Not_ava.jpg" alt="Not Avatar">
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Имя:
+                    </td>
+                    <td>
+                        {{ user.first_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Фамилия:
+                    </td>
+                    <td>
+                        {{ user.last_name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Телефон:
+                    </td>
+                    <td>
+                        {{ user.phone }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Страна:
+                    </td>
+                    <td>
+                        {{ user.country }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Почта:
+                    </td>
+                    <td>
+                        {{ user.email }}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <table>
+                <tr class="text-center">
+                    <td>
+                        <a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'users:profile_update' %}" class="btn btn-outline-secondary">Изменить</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

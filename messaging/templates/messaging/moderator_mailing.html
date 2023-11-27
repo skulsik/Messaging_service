@@ -1,0 +1,167 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <table width=100% style="margin-bottom: 20px;">
+                    <tr>
+                        <td><h3 style="color: orange;">{{ title }}</h3></td>
+                        <td style="text-align: right;"><a href="{% url 'messaging:create_mailing' %}" class="btn btn-outline-secondary">Добавить, новую рассылку</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="get" action="{% url 'messaging:moderator_mailing' %}">
+                {% csrf_token %}
+
+            {% for object in object_list %}
+
+                <br>
+                <center>
+                <div class="col-10">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="about-info">
+                                <h5 style="color: orange;">{{ object.name }}</h5>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table">
+                                <tr>
+                                    <td width="60%">
+                                        <p>Дата и время запуска рассылки:</p>
+                                    </td>
+                                    <td>
+                                        {{ object.dtime_begin }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Дата и время остановки рассылки:</p>
+                                    </td>
+                                    <td>
+                                        {{ object.dtime_end }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Периодичность рассылки:</p>                                    </td>
+                                    <td>
+                                        {{ object.frequency }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Статус:</p>
+                                    </td>
+                                    <td>
+                                        {{ object.status }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Автор рассылки:</p>
+                                    </td>
+                                    <td>
+                                        {{ object.user_owner }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Сообщение:</p>
+                                    </td>
+                                    <td>
+                                        <details>
+                                            <summary>{{ object.message }}</summary>
+                                            <p>Текст сообщения:</p>{{ object.message.text }}
+                                        </details>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Список клиентов, которые получат сообщение:</p>
+                                    </td>
+                                    <td>
+                                        {% for client in object.clients.all %}
+                                        <details>
+                                            <summary>{{ client }}</summary>
+                                            <table class="table">
+                                                <tr>
+                                                    <td>
+                                                        Email:
+                                                    </td>
+                                                    <td>
+                                                        {{ client.email }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Фамилия:
+                                                    </td>
+                                                    <td>
+                                                        {{ client.surname }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Имя:
+                                                    </td>
+                                                    <td>
+                                                        {{ client.name }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Отчество:
+                                                    </td>
+                                                    <td>
+                                                        {{ client.patronymic }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Комментарий:
+                                                    </td>
+                                                    <td>
+                                                        {{ client.comments }}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </details>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Включение/отключение рассылки:</p>
+                                    </td>
+                                    <td style="text-align: right">
+                                            <input type="checkbox" name="{{ object.id }}" {% if object.is_active %}checked{% endif %}>&nbsp&nbsp&nbsp
+                                            <button type="submit" class="btn btn-outline-secondary">Сохранить</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                </center>
+
+            {% endfor %}
+
+            </table>
+            </form>
+        </div>
+        <div class="card-footer">
+            <center><a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a></center>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

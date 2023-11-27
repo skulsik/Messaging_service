@@ -1,0 +1,85 @@
+{% extends 'messaging/base.html' %}
+{% load FilterExtension %}
+
+{% block content %}
+
+<br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <h5 style="color: orange;">{{ title }}</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <tr>
+                    <td>
+                        Название:
+                    </td>
+                    <td>
+                        {{ object.name }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Содержимое:
+                    </td>
+                    <td>
+                        {{ object.content }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Изображение:
+                    </td>
+                    <td>
+                        <img src="{{ object.image|mediapath }}" class="img-fluid" alt="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Дата создания:
+                    </td>
+                    <td>
+                        {{ object.date_of_creation }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Количество просмотров:
+                    </td>
+                    <td>
+                        {{ object.number_of_views }}
+                    </td>
+                </tr>
+                <tr class="text-center">
+                    {% if object.user_owner == user %}
+                    <td>
+                        <a href="{% url 'blog:update_blog' object.slug %}" class="btn btn-outline-secondary">Изменить</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'blog:delete_blog' object.slug %}" class="btn btn-outline-danger">Удалить</a>
+                    </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+        <div class="card-footer">
+            <table class="table">
+                <tr class="text-center">
+                    <td>
+                        <a href="{% url 'messaging:home' %}" class="btn btn-outline-secondary">На главную</a>
+                    </td>
+                    <td>
+                        <a href="{% url 'blog:user_blogs' %}" class="btn btn-outline-secondary">К списку статей</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

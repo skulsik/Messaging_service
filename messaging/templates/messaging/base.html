@@ -1,0 +1,297 @@
+{% load static %}
+{% load FilterExtension %}
+
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Сервис рассылки для вашего бизнеса</title>
+
+        <!-- CSS FILES -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+        <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+
+        <link href="{% static 'css/magnific-popup.css' %}" rel="stylesheet">
+
+        <link href="{% static 'css/tooplate-waso-strategy.css' %}" rel="stylesheet">
+
+
+    </head>
+
+    <body id="section_1">
+
+        <header class="site-header">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-lg-3 col-md-5 col-7">
+                        <p class="text-white mb-0">
+                            <i class="bi-clock site-header-icon me-2"></i>
+                            24/7
+                        </p>
+                    </div>
+
+                    <div class="col-lg-2 col-md-3 col-5">
+                        <p class="text-white mb-0">
+                            <a href="tel: +7(3822)-77-77-77" class="text-white">
+                                <i class="bi-telephone site-header-icon me-2"></i>
+                                77-77-77
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="col-lg-3 col-md-3 col-12 ms-auto">
+                        <ul class="social-icon">
+                            <li><a href="https://facebook.com/tooplate" class="social-icon-link bi-facebook"></a></li>
+
+                            <li><a href="https://pinterest.com/tooplate" class="social-icon-link bi-pinterest"></a></li>
+
+                            <li><a href="https://twitter.com/minthu" class="social-icon-link bi-twitter"></a></li>
+
+                            <li><a href="https://www.youtube.com/tooplate" class="social-icon-link bi-youtube"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+
+        <nav class="navbar navbar-expand-lg bg-white shadow-lg">
+            <div class="container">
+
+                <a href="#" class="navbar-brand">№1 в России<br><span class="text-danger">Сервис рассылки</span></a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'messaging:home' %}"><small class="small-title"><strong class="text-warning">01</strong></small> Главная</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'blog:blogs' %}"><small class="small-title"><strong class="text-warning">02</strong></small> Блог</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_4"><small class="small-title"><strong class="text-warning">03</strong></small> Статистика</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link click-scroll" href="#section_5"><small class="small-title"><strong class="text-warning">04</strong></small> Контакты</a>
+                        </li>
+
+                        {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'users:logout' %}"><small class="small-title"><strong class="text-warning">05</strong></small> Выйти</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'users:login' %}"><small class="small-title"><strong class="text-warning">05</strong></small> Войти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'users:register' %}"><small class="small-title"><strong class="text-warning">06</strong></small> Регистрация</a>
+                            </li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <main>
+
+            {% if user.is_authenticated %}
+
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <br>
+                            <table width="100%">
+                                <tr>
+                                    <td>
+                                        <table class="table">
+                                            <tr>
+                                                <td colspan="8">
+                                                    <h5><strong class="text-warning">Панель управления пользователя.</strong></h5>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'messaging:clients' %}"> Клиенты </a>
+                                                </td>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'messaging:messages' %}">Сообщения</a>
+                                                </td>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'messaging:user_mailing' %}">Рассылка</a>
+                                                </td>
+                                                <td>
+                                                    <a class="bi-arrow-counterclockwise" href="{% url 'blog:user_blogs' %}">Статьи</a>
+                                                </td>
+                                                <td>
+                                                    {% if user.is_superuser %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'admin:index' %}">Админка</a>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if perms.messaging.view_mailing %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_mailing' %}"> Список рассылок </a>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if perms.users.view_user %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_users' %}"> Список пользователей </a>
+                                                    {% endif %}
+                                                </td>
+                                                <td>
+                                                    {% if perms.users.view_log %}
+                                                        <a class="bi-arrow-counterclockwise" href="{% url 'messaging:moderator_log' %}"> Список log </a>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td class="text-center">
+                                        {% if user.avatar %}
+                                            <img style="height: 100px; width: 100px; margin: 15px;" src="{{ user.avatar|mediapath }}" alt="Avatar" class="card-img">
+                                        {% else %}
+                                            <img style="height: 100px; width: 100px; margin: 15px;" src="http://127.0.0.1:8000/media/users/Not_ava.jpg" alt="Not Avatar" class="card-img">
+                                        {% endif %}
+                                        <br>
+                                        <a class="" href="{% url 'users:profile' %}"><small>ПРОФИЛЬ</small></a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+
+            <section class="contact" id="section_5">
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f9c10b" fill-opacity="1" d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,250.7C1248,256,1344,288,1392,304L1440,320L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+
+                <div class="contact-container-wrap">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="col-lg-6 col-12">
+                                <form class="custom-form contact-form" action="" method="post" role="form">
+                                    <small class="small-title">Контакты <strong class="text-white">04/06</strong></small>
+
+                                    <h2 class="mb-5">Есть вопросы? Заполни форму обратной связи, мы обязательно ответим.</h2>
+
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <input type="text" name="name" id="name" class="form-control" placeholder="Ваше имя" required="">
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-6 col-12">
+                                            <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*" class="form-control" placeholder="Почта" required="">
+                                        </div>
+
+                                        <div class="col-12">
+                                            <textarea class="form-control" rows="7" id="message" name="message" placeholder="Ваше сообщение"></textarea>
+
+                                            <button type="submit" class="form-control">Отправить</button>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="col-lg-6 col-12">
+                                <div class="contact-thumb">
+
+                                    <div class="contact-info bg-white shadow-lg">
+                                        <h4 class="mb-4">Томск, ул. Ленина вилла 73</h4>
+
+                                        <h4 class="mb-2">
+                                            <a href="tel: +7(3822)-77-77-77">
+                                                <i class="bi-telephone contact-icon me-2"></i>
+                                                +7(3822)-77-77-77
+                                            </a>
+                                        </h4>
+
+                                        <h5>
+                                            <a href="mailto:info@company.com" class="footer-link">
+                                                <i class="bi-envelope-fill contact-icon me-2"></i>
+                                                info@company.com
+                                            </a>
+                                        </h5>
+
+                                        <!-- Copy "embed a map" HTML code from any point on Google Maps -> Share Link  -->
+
+                                        <iframe class="google-map mt-4" src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d926.4699023406306!2d84.94928929247715!3d56.47587142042048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x43269358ccd74e21%3A0xcc49670a65401896!2sAdministratsiya%20Goroda%20Tomska%2C%20Lenin%20Ave%2C%2073%2C%20Tomsk%2C%20Tomsk%20Oblast%2C%20634050!3m2!1d56.475919999999995!2d84.9503306!5e0!3m2!1sen!2sru!4v1689165533928!5m2!1sen!2sru" width="100%" height="300" allowfullscreen="" loading="lazy"></iframe>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-12">
+                        <div class="site-footer-wrap d-flex align-items-center">
+                            <p class="copyright-text mb-0 me-4">Copyright © 2023 Сервис рассылок для вашего бизнеса</p>
+
+                            <ul class="social-icon">
+                                <li><a href="https://facebook.com/tooplate" class="social-icon-link bi-facebook"></a></li>
+
+                                <li><a href="https://pinterest.com/tooplate" class="social-icon-link bi-pinterest"></a></li>
+
+                                <li><a href="https://twitter.com/minthu" class="social-icon-link bi-twitter"></a></li>
+
+                                <li><a href="https://www.youtube.com/tooplate" class="social-icon-link bi-youtube"></a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-12">
+                    	<p class="copyright-text mb-0 me-4">Waso HTML Template is designed by <a href="https://www.tooplate.com/" target="_blank">Tooplate</a></p>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery.sticky.js' %}"></script>
+        <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+        <script src="{% static 'js/magnific-popup-options.js' %}"></script>
+        <script src="{% static 'js/click-scroll.js' %}"></script>
+        <script src="{% static 'js/custom.js' %}"></script>
+
+    </body>
+</html>

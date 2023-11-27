@@ -1,0 +1,35 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+<br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <br>
+                <p>{% if object %}Измените данные статьи.{% else %}Добавьте новую статью.{% endif %}</p>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                {% if object %}
+                    {% if object.user_owner == user %}
+                        <button type="submit" class="btn btn-outline-secondary">Сохранить</button>
+                    {% endif %}
+                {% else %}
+                    <button type="submit" class="btn btn-outline-secondary">Добавить</button>
+                {% endif %}
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'blog:blogs' %}" class="btn btn-outline-secondary">Список статей</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% endblock %}

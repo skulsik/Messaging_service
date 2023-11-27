@@ -1,0 +1,36 @@
+{% extends 'messaging/base.html' %}
+
+{% block content %}
+
+{% if object.user_owner == user %}
+
+<br>
+<center>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            <div class="about-info">
+                <h5 style="color: orange;">Удаление клиента</h5>
+            </div>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                Уверены, что хотите удалить клиента "{{ object }}"?<br><br>
+                <input type="submit" class="btn btn-outline-danger" value="Подтвердите удаление">
+            </form>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'messaging:clients' %}" class="btn btn-outline-secondary">Назад</a>
+        </div>
+    </div>
+</div>
+</center>
+
+{% else %}
+
+{% include 'messaging/access_is_closed.html' %}
+
+{% endif %}
+
+{% endblock %}
